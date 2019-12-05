@@ -1,0 +1,44 @@
+= Tp1
+
+image:https://img.shields.io/badge/vert.x-3.8.3-purple.svg[link="https://vertx.io"]
+
+TP Cara Vertx
+
+Contexte:
+Pour simuler l'arrivée de Clients, Restaurant Vericle adresse des messages Json au Serveur contenant un client et ses états.
+A ce stade, les messages envoyés sont perdus, vous pouvez le constater en lancant l'application:
+```
+Echec de l'envoi à : restaurant.serveur
+Echec de l'envoi à : restaurant.serveur
+Echec de l'envoi à : restaurant.serveur
+```
+
+== Question 1.RestaurantLauncher
+Modifier le code pour démarrer plusiers occurences de  Serveurs Verticles et Cuisinier verticles en utilisant les variables serveursNb et cuisiniersNb
+
+== Question 2.ServeurVerticle
+Instancier l'eventBus pour receptionner les messages envoyés par RestaurantVerticle
+
+== Question 3.ServeurVerticle
+Mettre en place la reception des messages envoyés par le Restaurant (typés Client envoyés au format Json)
+
+== Question 4.ServeurVerticle
+A l'acceuil d'un client, le comptabiliser dans un compteur Counter dans un espace vertx.sharedData()
+
+== Question 5.ServeurVerticle
+Même chose qu'a la question 4 mais cette fois stocker l'objet client dans une Map (LocalMap ou AsynchronousMap)
+A l'acceuil d'un client, le stocker le client dans un espace vertx.sharedData() typé Map
+
+== Question 6.
+
+
+== Help
+* https://blog.invivoo.com/vert-x-basics-concurrence-et-scalabilite-avec-les-verticles/[Vert.x Verticles]
+* https://www.mednikov.net/vertx-eventbus/[Vert.x EventBus]
+* https://vertx.io/docs/vertx-core/java/#_asynchronous_counters[Counter]
+* https://vertx.io/docs/[Vert.x Documentation]
+* https://stackoverflow.com/questions/tagged/vert.x?sort=newest&pageSize=15[Vert.x Stack Overflow]
+* https://groups.google.com/forum/?fromgroups#!forum/vertx[Vert.x User Group]
+* https://gitter.im/eclipse-vertx/vertx-users[Vert.x Gitter]
+
+
