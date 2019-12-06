@@ -3,7 +3,9 @@ package com.cara.vertx.Verticles;
 import com.cara.vertx.domain.Client;
 import com.cara.vertx.enums.ClientStatus;
 import com.cara.vertx.enums.CommandeStatus;
+import com.cara.vertx.utils;
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.shareddata.AsyncMap;
@@ -51,22 +53,30 @@ public class RestaurantVerticle extends AbstractVerticle {
       Client client = new Client(++clientId);
       //On adresse un message vers les Verticles serveurAddress au format JSON
       JsonObject jsonToEncode = ClientObjectToJson(client);
-      eventbus.send(serveurAddress, jsonToEncode, ar->{
+      //Definir le head dans le message envoyé
+      DeliveryOptions options = utils.getDeliveryOptions("Restaurant", "Serveur");
+      eventbus.request(serveurAddress, jsonToEncode, options,  ar->{
         if (ar.succeeded()){
-          System.out.println("send ok");
+          System.out.println("[Restaurant] Client pris en charge");
         }
         else {
-          System.out.println("Echec de l'envoi à : "+serveurAddress);
+          System.out.println("[Restaurant]: Echec de l'envoi à : "+serveurAddress);
         }
       });
     });
+
+    //recevoir la reponse de Serveur
+    eventbus.consumer(clientAddress,res->{
+      System.out.println("[Client] <- "+ res.body());
+    });
   }
+
 
   /** Function qui retourne un élément aléatoire d'une liste
    * @param list
    * @return String
    */
-  public String getRandomElement(List<String> list)
+  public static String getRandomElement(List<String> list)
   {
     Random rand = new Random();
     return list.get(rand.nextInt(list.size()));
@@ -76,7 +86,7 @@ public class RestaurantVerticle extends AbstractVerticle {
    * @param client
    * @return JsonObject
    */
-  private JsonObject ClientObjectToJson(Client client) {
+  public static JsonObject ClientObjectToJson(Client client) {
     JsonObject jsonToEncode = new JsonObject();
     jsonToEncode.put("id", client.getId());
     jsonToEncode.put("clientStatus", client.getClientStatus());

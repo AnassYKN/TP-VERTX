@@ -65,8 +65,6 @@ public class RestaurantLauncher {
 
     Thread.sleep(1000);
 
-
-
     System.out.println("End of RestaurantLauncher");
 
   }

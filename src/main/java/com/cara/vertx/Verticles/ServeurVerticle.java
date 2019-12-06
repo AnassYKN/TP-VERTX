@@ -1,14 +1,23 @@
 package com.cara.vertx.Verticles;
 
 import com.cara.vertx.domain.Client;
+import com.cara.vertx.enums.ClientStatus;
+import com.cara.vertx.enums.CommandeStatus;
+import com.cara.vertx.utils;
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.core.eventbus.EventBus;
+import io.vertx.core.eventbus.Message;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.shareddata.Counter;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static com.cara.vertx.Verticles.RestaurantVerticle.ClientObjectToJson;
+import static com.cara.vertx.Verticles.RestaurantVerticle.getRandomElement;
 
 public class ServeurVerticle extends AbstractVerticle {
 
@@ -31,10 +40,6 @@ public class ServeurVerticle extends AbstractVerticle {
   public void start() throws Exception {
     System.out.println(messageIntro + "Start of Serveur Verticle");
 
-    /**Q2: Instancier l'eventBus
-     * cette doc pourrait vous être utile https://www.mednikov.net/vertx-eventbus/
-     */
-
     final EventBus eventBus = vertx.eventBus();
 
 
@@ -43,13 +48,24 @@ public class ServeurVerticle extends AbstractVerticle {
      */
 
     eventBus.consumer(serveurAddress, res -> {
+
       //receive a message
       JsonObject jsonObject = JsonObject.mapFrom(res.body());
       Client client = jsonObject.mapTo(Client.class);
-      System.out.println(client.toString());
-      //JsonObject reply = new JsonObject().put("result", "ok");
-      res.reply(jsonObject);
+      System.out.println("[Serveur] consumer1 <- " + res.body());
 
+      //modifier status client to waiting
+      client.setClientStatus(ClientStatus.CLWAITING);
+      client.setCommandeStatus(CommandeStatus.CMDORDERED);
+      client.setPlat(getRandomElement(menu));
+
+      JsonObject jsonToEncode = ClientObjectToJson(client);
+
+      //Vers -> Cuisinier
+      //Definir le head dans le message envoyé
+      DeliveryOptions options = utils.getDeliveryOptions("Serveur", "Cuisinier");
+
+      eventBus.send(CuisinierAddress,jsonToEncode, options);
 
       long add = 1;
       vertx
@@ -64,11 +80,33 @@ public class ServeurVerticle extends AbstractVerticle {
                 System.out.println("Nombre de Clients dans le Restaurant:" + hhh.result());
               });
           });
+      //System.out.println(Json.encode(menu));
+    });
 
+    //Recevoir la reponse de cuisinier
+    eventBus.consumer(serveurAddress,req->{
+      if (!req.headers().isEmpty()) {
+        utils.logFromTo(req);
 
-            //System.out.println(Json.encode(menu));
+        if (req.headers().get("Sender").equals("Cuisinier")) {
+          System.out.println("[Serveur] consumer2 <-" + req.body());
 
+          //receive a message
+          JsonObject jsonObject = JsonObject.mapFrom(req.body());
+          Client client = jsonObject.mapTo(Client.class);
 
+          //modifier status client to waiting
+          client.setClientStatus(ClientStatus.CLORDERPASSED);
+          client.setCommandeStatus(CommandeStatus.CMDSERVED);
+
+          JsonObject jsonToEncode = ClientObjectToJson(client);
+          //Vers -> Client
+          //Definir le head dans le message envoyé
+          DeliveryOptions options = utils.getDeliveryOptions("Serveur", "Client");
+          eventBus.send(ClientAddress,jsonToEncode, options);
+
+        }
+      }
     });
 
     /**Q4 & Q5 Comptabiliser les clients du restaurant dans un sharedData
