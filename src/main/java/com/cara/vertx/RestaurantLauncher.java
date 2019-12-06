@@ -50,18 +50,22 @@ public class RestaurantLauncher {
     final DeploymentOptions serveurOptions = new DeploymentOptions().setInstances(serveursNb);
     final DeploymentOptions cuisinierOptions = new DeploymentOptions().setInstances(cuisiniersNb);
 
-    final Handler<AsyncResult<String>> restaurantCompletionHandler = ar -> {
+    //passage des DeploymentOptions au deployVerticle
+      final Handler<AsyncResult<String>> restaurantCompletionHandler = ar -> {
+
       System.out.println("Restaurant Verticle Deployed");
       //Cuisinier
-      vertx.deployVerticle(CuisinierVerticle.class.getName());
+      vertx.deployVerticle(CuisinierVerticle.class.getName(),cuisinierOptions);
       //Serveur
-      vertx.deployVerticle(ServeurVerticle.class.getName());
+      vertx.deployVerticle(ServeurVerticle.class.getName(),serveurOptions);
 
     };
 
     vertx.deployVerticle(RestaurantVerticle.class.getName(),restaurantCompletionHandler);
 
     Thread.sleep(1000);
+
+
 
     System.out.println("End of RestaurantLauncher");
 

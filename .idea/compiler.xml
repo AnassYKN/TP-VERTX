@@ -6,8 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="vertx" />
+        <module name="TP1" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="TP1" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -29,8 +29,6 @@ A l'acceuil d'un client, le comptabiliser dans un compteur Counter dans un espac
 Même chose qu'a la question 4 mais cette fois stocker l'objet client dans une Map (LocalMap ou AsynchronousMap)
 A l'acceuil d'un client, le stocker le client dans un espace vertx.sharedData() typé Map
 
-== Question 6.
-
 
 == Help
 * https://blog.invivoo.com/vert-x-basics-concurrence-et-scalabilite-avec-les-verticles/[Vert.x Verticles]

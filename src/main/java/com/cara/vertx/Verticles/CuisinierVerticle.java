@@ -17,6 +17,15 @@ public class CuisinierVerticle extends AbstractVerticle {
     /** Q2 Receptionner la commande d'un client
      *
      */
+    /*
+    //Recevoir un message
+    final EventBus eventBus = vertx.eventBus();
+    final MessageConsumer<String> consumer = eventBus.consumer(CuisinierAddress);
+    consumer.handler(message -> {
+      System.out.println("[Cuisinier] <- " + message.body());
+    });
+
+     */
   }
 
   @Override
