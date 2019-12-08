@@ -35,9 +35,17 @@ image:https://img.shields.io/badge/vert.x-3.8.3-purple.svg[link="https://vertx.i
 
 Contexte:
 
+On va essayer d'implementer un server HTTP pour qu'on puisse afficher les resultats qu'on recoit sur le console dans une page web.
 
+== Question 1.RestaurantVerticle
 
+Implementer un serveur Http dans la classe RestaurantVerticle.
+Implementer un router vertx.
 
+== Question 2
+
+Implementer un handler pour passer les paramateres sur un url specifié 
+Passer la reponse vers la route.
 
 = Tp3
 
