@@ -29,7 +29,31 @@ A l'acceuil d'un client, le comptabiliser dans un compteur Counter dans un espac
 Même chose qu'a la question 4 mais cette fois stocker l'objet client dans une Map (LocalMap ou AsynchronousMap)
 A l'acceuil d'un client, le stocker le client dans un espace vertx.sharedData() typé Map
 
-== Question 6.
+= Tp2
+
+image:https://img.shields.io/badge/vert.x-3.8.3-purple.svg[link="https://vertx.io"]
+
+
+
+
+= Tp3
+
+image:https://img.shields.io/badge/vert.x-3.8.3-purple.svg[link="https://vertx.io"]
+
+TP Cara Vertx
+
+Contexte:
+
+La préparation de plats en cuisine prend plus ou moins longtemps.
+ce temps passé bloque l'eventloop et pénalise l'application globale.
+
+== Question 1.RestaurantLauncher
+Implementer un worker_verticle
+
+
+== Question 2.
+Lancer le jar en mode high availability
+-mvn clean install
 
 
 == Help
