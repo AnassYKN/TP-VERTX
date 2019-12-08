@@ -7,10 +7,12 @@ import com.cara.vertx.utils;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.core.eventbus.EventBus;
+import io.vertx.core.http.HttpServer;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.shareddata.AsyncMap;
 import io.vertx.core.shareddata.Counter;
 import io.vertx.core.shareddata.SharedData;
+import io.vertx.ext.web.Router;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +57,7 @@ public class RestaurantVerticle extends AbstractVerticle {
       JsonObject jsonToEncode = ClientObjectToJson(client);
       //Definir le head dans le message envoyé
       DeliveryOptions options = utils.getDeliveryOptions("Restaurant", "Serveur");
+
       eventbus.request(serveurAddress, jsonToEncode, options,  ar->{
         if (ar.succeeded()){
           System.out.println("[Restaurant] Client pris en charge");
@@ -64,11 +67,39 @@ public class RestaurantVerticle extends AbstractVerticle {
         }
       });
     });
+    /**
+     * Question 1 TP2
+     * Créer un server Http
+     */
+
+    System.out.println("Start of Http Server Verticle");
+    //création d'un server http fournit par vertx
+    HttpServer server = vertx.createHttpServer();
+    //création de la router vertx
+    Router router = Router.router(vertx);
+
+    server.requestHandler(router)
+      .listen(8081, ar -> {
+        if (ar.succeeded()) {
+          System.out.println("HTTP server running on port 8081");
+        } else {
+          System.out.println("Could not start a HTTP server");
+        }
+      });
 
     //recevoir la reponse de Serveur
     eventbus.consumer(clientAddress,res->{
       System.out.println("[Client] <- "+ res.body());
+      //ce handler sera appelé sur la route localhost:8081/statusCommande
+      router.get("/statusCommande").handler(
+        req->{
+          req.response()
+            .putHeader("content-type", "text/html")
+            //Ecrire la reponse à la fin
+            .end(res.body().toString());
+        });
     });
+
   }
 
 
