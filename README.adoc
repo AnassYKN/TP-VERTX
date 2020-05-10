@@ -1,69 +1,69 @@
 = Tp1
 
-image:https://img.shields.io/badge/vert.x-3.8.3-purple.svg[link="https://vertx.io"]
+image: https: //img.shields.io/badge/vert.x-3.8.3-purple.svg [link = "https://vertx.io"]
 
 TP Cara Vertx
 
-Contexte:
-Pour simuler l'arrivée de Clients, Restaurant Vericle adresse des messages Json au Serveur contenant un client et ses états.
-A ce stade, les messages envoyés sont perdus, vous pouvez le constater en lancant l'application:
-```
-Echec de l'envoi à : restaurant.serveur
-Echec de l'envoi à : restaurant.serveur
-Echec de l'envoi à : restaurant.serveur
-```
+Context:
+To simulate the arrival of Customers, Restaurant Vericle sends Json messages to the Server containing a customer and its status.
+At this stage, the sent messages are lost, you can see it by launching the application:
+`` ''
+Failed to send to: restaurant.serveur
+Failed to send to: restaurant.serveur
+Failed to send to: restaurant.serveur
+`` ''
 
 == Question 1.RestaurantLauncher
-Modifier le code pour démarrer plusiers occurences de  Serveurs Verticles et Cuisinier verticles en utilisant les variables serveursNb et cuisiniersNb
+Modify the code to start several occurrences of Servers Verticles and Cook verticles using the variables serversNb and cooksNb
 
-== Question 2.ServeurVerticle
-Instancier l'eventBus pour receptionner les messages envoyés par RestaurantVerticle
+== Question 2.VerticleServer
+Instantiate eventBus to receive messages sent by RestaurantVerticle
 
-== Question 3.ServeurVerticle
-Mettre en place la reception des messages envoyés par le Restaurant (typés Client envoyés au format Json)
+== Question 3.VerticleServer
+Set up the reception of messages sent by the Restaurant (typed Customer sent in Json format)
 
-== Question 4.ServeurVerticle
-A l'acceuil d'un client, le comptabiliser dans un compteur Counter dans un espace vertx.sharedData()
+== Question 4.VerticleServer
+At the reception of a customer, count it in a Counter counter in a space vertx.sharedData ()
 
-== Question 5.ServeurVerticle
-Même chose qu'a la question 4 mais cette fois stocker l'objet client dans une Map (LocalMap ou AsynchronousMap)
-A l'acceuil d'un client, le stocker le client dans un espace vertx.sharedData() typé Map
+== Question 5.VerticleServer
+Same as question 4 but this time store the client object in a Map (LocalMap or AsynchronousMap)
+When welcoming a customer, store the customer in a vertx.sharedData () space typed Map
 
 = Tp2
 
-image:https://img.shields.io/badge/vert.x-3.8.3-purple.svg[link="https://vertx.io"]
+image: https: //img.shields.io/badge/vert.x-3.8.3-purple.svg [link = "https://vertx.io"]
 
-Contexte:
+Context:
 
-On va essayer d'implementer un server HTTP pour qu'on puisse afficher les resultats qu'on recoit sur le console dans une page web.
+We will try to implement an HTTP server so that we can display the results we receive on the console in a web page.
 
 == Question 1.RestaurantVerticle
 
-Implementer un serveur Http dans la classe RestaurantVerticle.
-Implementer un router vertx.
+Implement an Http server in the RestaurantVerticle class.
+Implement a vertx router.
 
 == Question 2
 
-Implementer un handler pour passer les paramateres sur un url specifié 
-Passer la reponse vers la route.
+Implement a handler to pass paramateres on a specified url
+Pass the answer towards the road.
 
 = Tp3
 
-image:https://img.shields.io/badge/vert.x-3.8.3-purple.svg[link="https://vertx.io"]
+image: https: //img.shields.io/badge/vert.x-3.8.3-purple.svg [link = "https://vertx.io"]
 
 TP Cara Vertx
 
-Contexte:
+Context:
 
-La préparation de plats en cuisine prend plus ou moins longtemps.
-ce temps passé bloque l'eventloop et pénalise l'application globale.
+The preparation of dishes in the kitchen takes more or less long.
+this time spent blocks the eventloop and penalizes the overall application.
 
 == Question 1.RestaurantLauncher
-Implementer un worker_verticle
+Implement a worker_verticle
 
 
 == Question 2.
-Lancer le jar en mode high availability
+Launch the jar in high availability mode
 -mvn clean install
 
 
@@ -75,5 +75,3 @@ Lancer le jar en mode high availability
 * https://stackoverflow.com/questions/tagged/vert.x?sort=newest&pageSize=15[Vert.x Stack Overflow]
 * https://groups.google.com/forum/?fromgroups#!forum/vertx[Vert.x User Group]
 * https://gitter.im/eclipse-vertx/vertx-users[Vert.x Gitter]
-
-
